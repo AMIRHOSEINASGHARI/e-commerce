@@ -7,6 +7,7 @@ import ProductDetails from "./components/ProductDetails/ProductDetails";
 import Header from "./components/Header/Header";
 import Cart from "./components/Cart/Cart";
 import Footer from "./components/Footer/Footer";
+import ScrollToTop from "./components/ScrollToTop";
 //contexts
 import ProductsContextProvider from "./context/ProductsContextProvider";
 import CartContextProvider from "./context/CartContextProvider";
@@ -16,6 +17,7 @@ function App() {
     <div>
       <ProductsContextProvider>
         <CartContextProvider>
+          <ScrollToTop />
           <Header />
           <Routes>
             <Route path="/" element={<HomePage />} />
