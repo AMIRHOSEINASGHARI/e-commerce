@@ -14,7 +14,7 @@ import CartContextProvider from "./context/CartContextProvider";
 
 function App() {
   return (
-    <div>
+    <div className="font-poppins">
       <ProductsContextProvider>
         <CartContextProvider>
           <ScrollToTop />
