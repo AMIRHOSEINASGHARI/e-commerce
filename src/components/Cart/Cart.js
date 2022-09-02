@@ -11,7 +11,7 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 const Cart = () => {
   const { state, dispatch } = useContext(CartContext);
   return (
-    <div>
+    <div className="min-h-screen max-w-[1200px] mx-auto">
       {state.totalItems === 0 ? (
         <EmptyCart />
       ) : (
