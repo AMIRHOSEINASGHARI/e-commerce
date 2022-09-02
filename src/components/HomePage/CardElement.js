@@ -1,6 +1,8 @@
 import React from "react";
 //functions
-import {shortTitle} from '../../services/functions'
+import { shortTitle } from "../../services/functions";
+//react-router-dom
+import { Link } from "react-router-dom";
 
 const CardElement = (props) => {
   const { category, id, title, image, price } = props;
@@ -14,7 +16,7 @@ const CardElement = (props) => {
       <div>
         <h6>${price}</h6>
       </div>
-      <a href="#">buy now</a>
+      <Link to={`/products/${id}`}>buy now</Link>
     </div>
   );
 };
