@@ -3,11 +3,13 @@ import React, { useContext, useState } from "react";
 import { ProductsContext } from "../../context/ProductsContextProvider";
 //components
 import CardElement from "./CardElement";
+import Loader from "../Loader";
 
 const HomePage = () => {
   const products = useContext(ProductsContext);
   const [newProducts, setNewProducts] = useState([]);
   const categories = ["all", ...new Set(products.map((el) => el.category))];
+  if (products.length === 0) return <Loader />;
   return (
     <div>
       <div>

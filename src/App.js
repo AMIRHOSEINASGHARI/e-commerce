@@ -3,7 +3,6 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 //components
 import HomePage from "./components/HomePage/HomePage";
-//contexts
 import ProductsContextProvider from "./context/ProductsContextProvider";
 
 function App() {
