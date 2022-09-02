@@ -5,14 +5,20 @@ import { useParams, Link } from "react-router-dom";
 //components
 import Loader from "../Loader";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import { IoCaretBackOutline } from "react-icons/io5";
+import {
+  IoCaretBackOutline,
+  IoCaretForwardOutline,
+  IoCloseOutline,
+} from "react-icons/io5";
 import CardElement from "../HomePage/CardElement";
 //functions
-import { shortTitle } from "../../services/functions";
+import { isInCart, quantityCount, shortTitle } from "../../services/functions";
 //contexts
 import { ProductsContext } from "../../context/ProductsContextProvider";
+import { CartContext } from "../../context/CartContextProvider";
 
 const ProductDetails = () => {
+  const { state, dispatch } = useContext(CartContext);
   const params = useParams();
   const [product, setProduct] = useState([]);
   const { category, description, id, title, image, price } = product;
@@ -24,7 +30,7 @@ const ProductDetails = () => {
     axios
       .get(`https://fakestoreapi.com/products/${params.id}`)
       .then((response) => setProduct(response.data));
-  }, []);
+  }, [params.id]);
   if (Object.keys(product).length === 0) return <Loader />;
   return (
     <div>
@@ -52,9 +58,54 @@ const ProductDetails = () => {
             <AiFillStar className="fill-amber-400" />
             <AiOutlineStar className="fill-amber-400" />
           </div>
-          <button className="uppercase font-extrabold bg-blue-500 text-white hover:bg-blue-600 transition-all duration-200 rounded-full py-3 px-10 mb-5">
-            buy now
-          </button>
+          {!isInCart(state, id) && (
+            <button
+              onClick={() => dispatch({ type: "add", payload: product })}
+              className="uppercase font-extrabold bg-blue-500 text-white hover:bg-blue-600 transition-all duration-200 rounded-full py-3 px-10 mb-5"
+            >
+              buy now
+            </button>
+          )}
+          {isInCart(state, id) && (
+            <div className="flex items-center mb-5">
+              <div className="border border-blue-300 flex items-center justify-center rounded-full w-[150px] overflow-hidden mr-5">
+                <button
+                  onClick={() =>
+                    dispatch({
+                      type: `${
+                        quantityCount(state, id) <= 1 ? "remove" : "decrease"
+                      }`,
+                      payload: product,
+                    })
+                  }
+                  className={`p-3 text-xl ${
+                    quantityCount(state, id) === 1
+                      ? "text-orange-400"
+                      : "text-blue-500"
+                  }`}
+                >
+                  <IoCaretBackOutline />
+                </button>
+                <span className="p-3 text-xl flex items-center justify-center w-[40px] text-blue-500">
+                  {quantityCount(state, id)}
+                </span>
+                <button
+                  onClick={() =>
+                    dispatch({ type: "increase", payload: product })
+                  }
+                  className="p-3 text-xl text-blue-500"
+                >
+                  <IoCaretForwardOutline />
+                </button>
+              </div>
+              <button
+                onClick={() => dispatch({ type: "remove", payload: product })}
+                className="text-red-600 hover:bg-red-200 hover:text-red-700 transition-all duration-200 text-4xl bg-red-100 rounded-full p-1"
+              >
+                <IoCloseOutline />
+              </button>
+            </div>
+          )}
           <Link
             className="flex items-center w-fit justify-center border rounded-md border-gray-200 text-gray-500 capitalize px-5 py-3"
             to={`/`}

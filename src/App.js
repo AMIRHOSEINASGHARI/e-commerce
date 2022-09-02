@@ -4,9 +4,9 @@ import { Route, Routes } from "react-router-dom";
 //components
 import HomePage from "./components/HomePage/HomePage";
 import ProductDetails from "./components/ProductDetails/ProductDetails";
-import CartContextProvider from "./context/CartContextProvider";
 //contexts
 import ProductsContextProvider from "./context/ProductsContextProvider";
+import CartContextProvider from "./context/CartContextProvider";
 
 function App() {
   return (
