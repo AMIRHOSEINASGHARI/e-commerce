@@ -15,13 +15,24 @@ const HomePage = () => {
       </div>
       <div>
         {categories.map((el, i) => (
-          <button key={i}>{el}</button>
+          <button
+            onClick={() => {
+              if (el === "all") {
+                setNewProducts(products);
+              } else {
+                setNewProducts(products.filter((item) => item.category === el));
+              }
+            }}
+            key={i}
+          >
+            {el}
+          </button>
         ))}
       </div>
       <div>
-        {products.map((el) => (
-          <CardElement {...el} key={el.id} />
-        ))}
+        {newProducts.length === 0
+          ? products.map((el) => <CardElement {...el} key={el.id} />)
+          : newProducts.map((el) => <CardElement {...el} key={el.id} />)}
       </div>
     </div>
   );
